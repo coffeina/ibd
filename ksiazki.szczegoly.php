@@ -22,6 +22,15 @@ $dane = $ksiazki->pobierz($id)
         <a href="ksiazki.lista.php"><i class="fas fa-chevron-left"></i> Powrót</a>
     </p>
 
-    <p>szczegóły książki......</p>
+    <?php if (!empty($dane['zdjecie'])): ?>
+        <img style="width: 30%" src="zdjecia/<?= $dane['zdjecie'] ?>" alt="<?= $dane['tytul'] ?>" class="img-thumbnail"/></br>
+    <?php else: ?>
+        brak zdjecia</br>
+    <?php endif; ?>
+    </br>
+    <p> ISBN : <?= $dane['isbn'] ?></p>
+    <p> Liczba stron : <?= $dane['liczba_stron'] ?></p>
+    <p> Cena : <strong><?= $dane['cena'] ?>zł</strong></p>
+    <p> Opis : <?= $dane['opis'] ?></p>
 
 <?php include 'footer.php'; ?>
