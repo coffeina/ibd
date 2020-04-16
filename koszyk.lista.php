@@ -45,8 +45,9 @@ include 'header.php';
 							<?php endif; ?>
 						</td>
 						<td><?= $ks['tytul'] ?></td>
-						<td><?= $ks['id_autora'] ?></td>
-						<td><?= $ks['id_kategorii'] ?></td>
+						<td><?= $ks['imie_autora'] ?></td>
+                        <td><?= $ks['nazwisko_autora'] ?></td>
+						<td><?= $ks['nazwa_kategorii'] ?></td>
 						<td><?= $ks['cena'] ?></td>
 						<td>
 							<div style="width: 50px">
