@@ -75,6 +75,10 @@ class Stronicowanie
         $parametry = $this->_przetworzParametry();
 
         $linki = "<nav><ul class='pagination'>";
+        if($liczbaStron != 0) {
+            $linki .= sprintf("<li class'page-item'><a href='%s?%s&strona=0'><i class='fas fa-angle-double-left mr-2 mt-2'></i></a></li>",$plik,$parametry);
+            $linki .= sprintf("<li class'page-item'><a href='%s?%s&strona=%d'><i class='fas fa-angle-left mr-2 mt-2'></i></a></li>",$plik,$parametry,max(0,$this->strona-1));
+        }
         for ($i = 0; $i < $liczbaStron; $i++) {
             if ($i == $this->strona) {
                 $linki .= sprintf("<li class='page-item active'><a class='page-link'>%d</a></li>", $i + 1);
@@ -88,18 +92,22 @@ class Stronicowanie
                 );
             }
         }
+        if($liczbaStron != 0) {
+            $linki .= sprintf("<li class'page-item'><a href='%s?%s&strona=%d'><i class='fas fa-angle-right ml-2 mt-2'></i></a></li>",$plik,$parametry,min($liczbaStron-1,$this->strona+1));
+            $linki .= sprintf("<li class'page-item'><a href='%s?%s&strona=%d'><i class='fas fa-angle-double-right ml-2 mt-2'></i></a></li>",$plik,$parametry,$liczbaStron-1);
+        }
         $linki .= "</ul></nav>";
 
         return $linki;
     }
-    public function pobierzInfoOLiczbieRekordow(string $select, string $strona): string
+    public function pobierzInfoOLiczbieRekordow(string $select): string
     {
         $rekordow = $this->db->policzRekordy($select, $this->parametryZapytania);
         if($rekordow == 0) {
             return "Wyświetlono 0 rekordów";
         }
 
-        $pocz = $strona*$this->naStronie+1;
+        $pocz = $this->$strona*$this->naStronie+1;
         $kon = min($pocz+$this->naStronie-1,$rekordow);
         $info = "Wyświetlono ".$pocz." - ".$kon." z ".$rekordow." rekordów";
 
