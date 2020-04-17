@@ -92,7 +92,19 @@ class Stronicowanie
 
         return $linki;
     }
+    public function pobierzInfoOLiczbieRekordow(string $select, string $strona): string
+    {
+        $rekordow = $this->db->policzRekordy($select, $this->parametryZapytania);
+        if($rekordow == 0) {
+            return "Wyświetlono 0 rekordów";
+        }
 
+        $pocz = $strona*$this->naStronie+1;
+        $kon = min($pocz+$this->naStronie-1,$rekordow);
+        $info = "Wyświetlono ".$pocz." - ".$kon." z ".$rekordow." rekordów";
+
+        return $info;
+    }
     /**
      * Przetwarza parametry wyszukiwania.
      * Wyrzuca zbędne elementy i tworzy gotowy do wstawienia w linku zestaw parametrów.
