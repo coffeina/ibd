@@ -24,8 +24,8 @@ class Ksiazki
     public function pobierzWszystkie()
     {
         $sql = "SELECT k.*, a.imie as imie_autora, a.nazwisko as nazwisko_autora, kat.nazwa as nazwa_kategorii FROM ksiazki k
-         LEFT JOIN autorzy a ON k.id_autora = a.id
-         LEFT JOIN kategorie kat on k.id_kategorii = kat.id";
+        JOIN autorzy a ON k.id_autora = a.id
+        JOIN kategorie kat on k.id_kategorii = kat.id";
 
         return $this->db->pobierzWszystko($sql);
     }
@@ -40,13 +40,13 @@ class Ksiazki
     {
         $parametry = [];
         $sql = "SELECT k.*, a.imie as imie_autora, a.nazwisko as nazwisko_autora, kat.nazwa as nazwa_kategorii FROM ksiazki k 
-        LEFT JOIN autorzy a ON k.id_autora = a.id
-        LEFT JOIN kategorie kat on k.id_kategorii = kat.id";
+        JOIN autorzy a ON k.id_autora = a.id
+        JOIN kategorie kat on k.id_kategorii = kat.id";
 
 
         // dodawanie warunków do zapytanie
         if (!empty($params['fraza'])) {
-            $sql .= "AND k.tytul LIKE :fraza ";
+            $sql .= "AND (k.tytul LIKE :fraza OR k.opis LIKE :fraza OR CONCAT(a.imie, ' ', a.nazwisko) LIKE :fraza";
             $parametry['fraza'] = "%$params[fraza]%";
         }
         if (!empty($params['id_kategorii'])) {
