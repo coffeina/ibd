@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors',1);
-error_reporting(E_ALL|E_STRICT);
+ini_set('display_errors', 1);
+error_reporting(E_ALL | E_STRICT);
 session_start();
 require_once 'vendor/autoload.php';
 
@@ -10,12 +10,14 @@ $koszyk = new Koszyk();
 
 if (isset($_POST['id_ksiazki'])) {
     if ($koszyk->czyIstnieje($_POST['id_ksiazki'], session_id())) {
-			// ksiazka już istnieje w koszyku, zwiększ ilość
-			// TODO: dodać odpowiednią funkcjonalność
+        // ksiazka już istnieje w koszyku, zwiększ ilość
+        if ($koszyk->zwiekszIloscKsiazek($_POST['id_ksiazki'], session_id())) {
+            echo 'ok';
+        }
     } else {
-			// książki nie ma w koszyku, dodaj do koszyka
-			if ($koszyk->dodaj($_POST['id_ksiazki'], session_id())) {
-				echo 'ok';
-			}
+        // książki nie ma w koszyku, dodaj do koszyka
+        if ($koszyk->dodaj($_POST['id_ksiazki'], session_id())) {
+            echo 'ok';
+        }
     }
 }
